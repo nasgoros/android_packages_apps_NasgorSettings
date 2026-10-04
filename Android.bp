@@ -1,0 +1,28 @@
+//
+// SPDX-FileCopyrightText: The nasgorOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "NasgorSettings",
+
+    // Include SettingsLib and it's dependencies
+    defaults: ["SettingsLibDefaults"],
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    manifest: "AndroidManifest.xml",
+
+    platform_apis: true,
+    certificate: "platform",
+    system_ext_specific: true,
+    privileged: true,
+    privapp_allowlist: "com.nasgoros.settings.xml",
+
+    static_libs: [
+        "androidx.appcompat_appcompat",
+        "androidx.preference_preference",
+        "SettingsLibPreference",
+        "LineagePreferenceLib",
+    ],
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The nasgorOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name" translatable="false">NasgorOS</string>
+    <string name="homepage_summary">Status bar, buttons, display and more</string>
+    <string name="category_statusbar">Status bar &amp; quick settings</string>
+    <string name="category_buttons">Buttons &amp; gestures</string>
+    <string name="category_display">Display</string>
+    <string name="category_battery">Battery &amp; lights</string>
+    <string name="category_system">System</string>
+</resources>

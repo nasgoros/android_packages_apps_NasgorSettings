@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The nasgorOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="homepage_summary">Bilah status, tombol, tampilan, dan lainnya</string>
+    <string name="category_statusbar">Bilah status &amp; setelan cepat</string>
+    <string name="category_buttons">Tombol &amp; gestur</string>
+    <string name="category_display">Tampilan</string>
+    <string name="category_battery">Baterai &amp; lampu</string>
+    <string name="category_system">Sistem</string>
+</resources>

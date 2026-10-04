@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The nasgorOS Project
+     SPDX-License-Identifier: Apache-2.0
+
+     Keys must match LineageParts part keys (lineage-sdk PartsList / parts_catalog.xml).
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/app_name">
+
+    <PreferenceCategory
+        android:key="category_statusbar"
+        android:title="@string/category_statusbar">
+        <lineageos.preference.LineagePartsPreference android:key="status_bar_settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_buttons"
+        android:title="@string/category_buttons">
+        <lineageos.preference.LineagePartsPreference android:key="button_settings" />
+        <lineageos.preference.LineagePartsPreference android:key="power_menu" />
+        <lineageos.preference.LineagePartsPreference android:key="touchscreen_gesture_settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_display"
+        android:title="@string/category_display">
+        <lineageos.preference.LineagePartsPreference android:key="livedisplay" />
+        <lineageos.preference.LineagePartsPreference android:key="rotation" />
+        <lineageos.preference.LineagePartsPreference android:key="long_screen_settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_battery"
+        android:title="@string/category_battery">
+        <lineageos.preference.LineagePartsPreference android:key="charging_control" />
+        <lineageos.preference.LineagePartsPreference android:key="charging_sounds_settings" />
+        <lineageos.preference.LineagePartsPreference android:key="battery_lights" />
+        <lineageos.preference.LineagePartsPreference android:key="notification_lights" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_system"
+        android:title="@string/category_system">
+        <lineageos.preference.LineagePartsPreference android:key="profiles_settings" />
+        <lineageos.preference.LineagePartsPreference android:key="trust_interface" />
+    </PreferenceCategory>
+</PreferenceScreen>
