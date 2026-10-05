@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-FileCopyrightText: 2026 The nasgorOS Project
+     SPDX-License-Identifier: Apache-2.0 -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/performance_title">
+    <SwitchPreferenceCompat android:key="performance_overlay"
+        android:title="@string/performance_overlay_title"
+        android:summary="@string/performance_overlay_summary"
+        android:persistent="false" />
+    <PreferenceCategory android:title="@string/display_fps_title">
+        <Preference android:key="app_fps" android:title="@string/app_fps_title"
+            android:summary="@string/fps_waiting" android:selectable="false" />
+        <Preference android:key="display_refresh" android:title="@string/display_refresh_title"
+            android:selectable="false" />
+        <Preference android:summary="@string/fps_explanation" android:selectable="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="CPU">
+        <Preference android:key="cpu_model" android:title="@string/cpu_model_title" android:selectable="false" />
+        <Preference android:key="cpu_cores" android:title="@string/cpu_cores_title" android:selectable="false" />
+        <Preference android:key="cpu_abis" android:title="@string/cpu_abis_title" android:selectable="false" />
+        <Preference android:key="cpu_frequency" android:title="@string/cpu_frequency_title" android:selectable="false" />
+        <Preference android:key="cpu_usage" android:title="@string/cpu_usage_title" android:selectable="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="GPU">
+        <Preference android:key="gpu_model" android:title="@string/gpu_model_title"
+            android:summary="@string/metric_loading" android:selectable="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="RAM">
+        <Preference android:key="memory_info" android:title="@string/memory_title" android:selectable="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

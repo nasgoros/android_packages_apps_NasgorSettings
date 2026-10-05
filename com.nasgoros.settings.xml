@@ -6,5 +6,7 @@
 <permissions>
     <privapp-permissions package="com.nasgoros.settings">
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+        <permission name="android.permission.ACCESS_FPS_COUNTER" />
+        <permission name="android.permission.REAL_GET_TASKS" />
     </privapp-permissions>
 </permissions>

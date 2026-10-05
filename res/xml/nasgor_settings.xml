@@ -8,6 +8,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/app_name">
 
+    <PreferenceCategory android:title="@string/category_performance">
+        <Preference
+            android:key="performance_info"
+            android:title="@string/performance_title"
+            android:summary="@string/performance_summary">
+            <intent android:targetPackage="com.nasgoros.settings"
+                android:targetClass="com.nasgoros.settings.performance.PerformanceActivity" />
+        </Preference>
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="category_statusbar"
         android:title="@string/category_statusbar">
