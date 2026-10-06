@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The nasgorOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Lets the user-enabled FPS overlay run as a plain service without a
+     foreground notification. -->
+<config>
+    <allow-in-power-save package="com.nasgoros.settings" />
+</config>

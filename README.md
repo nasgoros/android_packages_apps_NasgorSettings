@@ -16,39 +16,28 @@ Branch `17.0` targets LineageOS 24.0 (Android 17).
 
 With `ro.nasgoros.crdroid_settings=true`, the NasgorOS entry opens the full
 customization host supplied by the pinned crDroid Settings port. The vendor
-port keeps the launcher and ordinary apps unchanged, adds a Performance tab,
+port keeps the launcher and ordinary apps unchanged, adds a Performance (FPS info) tab,
 and applies NasgorOS branding. See `vendor/nasgoros/ports/crdroid/README.md`.
 The original LineageParts hub is available through Miscellaneous > Additional
 system settings, or directly on builds without the port. The monitor does not
 depend on crDroid APIs; the hub still needs LineageParts and LineagePreferenceLib.
 Porting notes and API boundaries: `vendor/nasgoros/PORTING.md`.
 
-**FPS, CPU & GPU info** is a separate activity owned by this app:
+**FPS info** (Performance) is owned by this app and has a single switch:
 
-- Actual foreground-task FPS from `WindowManager.registerTaskFpsCallback()`;
-  display refresh rate is shown separately in Hz. Static apps can report low FPS.
-- Chipset, core count, supported ABIs, current/maximum CPU cluster frequencies,
-  and CPU usage when `/proc/stat` is readable.
-- GPU renderer, vendor and OpenGL ES version from a small offscreen EGL context.
-- Available and total RAM.
-- Optional noninteractive FPS/CPU/GPU/RAM overlay with a foreground notification
-  and Stop action. It pauses while locked or screen off and is off after reboot.
-
-Kernel reads and EGL discovery run on a worker thread. Sampling and FPS callbacks
-are removed on pause/stop; stale callbacks from a previous task are ignored.
-Missing/denied kernel information is shown as unavailable, not a fabricated
-percentage. The GPU row describes the GPU; it does not claim to measure GPU load.
-No root commands or extra network access are used.
+- Shows the actual foreground-task FPS from
+  `WindowManager.registerTaskFpsCallback()` in a small counter over apps.
+  Static apps can report low FPS; display refresh rate (Hz) is not substituted.
+- Default position is the top-right corner; drag the counter to move it. The
+  position and on/off state persist (device-protected storage) and the overlay
+  is restored after reboot.
+- No notification: `FpsOverlayService` is a plain started service. The app is on
+  the power-save allowlist (`nasgor-settings-sysconfig.xml`,
+  `allow-in-power-save`), and its visible overlay window keeps the process
+  perceptible.
+- Sampling stops while the screen is off or locked.
 
 Platform signing is required for the FPS/task/window APIs. The manifest declares
-`ACCESS_FPS_COUNTER`, `REAL_GET_TASKS`, `INTERNAL_SYSTEM_WINDOW` and foreground
-service permissions; privileged permissions are listed in the allowlist.
-
-Run the host parser tests:
-
-```bash
-mkdir -p /tmp/nasgor-performance-tests
-javac -d /tmp/nasgor-performance-tests \
-  src/com/nasgoros/settings/performance/MetricParser.java tests/MetricParserTest.java
-java -cp /tmp/nasgor-performance-tests MetricParserTest
-```
+`ACCESS_FPS_COUNTER`, `REAL_GET_TASKS` and `SYSTEM_ALERT_WINDOW`
+(`TYPE_APPLICATION_OVERLAY`, which unlike system overlays can be dragged);
+privileged permissions are listed in the allowlist.

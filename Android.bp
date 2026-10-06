@@ -18,6 +18,7 @@ android_app {
     system_ext_specific: true,
     privileged: true,
     privapp_allowlist: "com.nasgoros.settings.xml",
+    required: ["nasgor-settings-sysconfig"],
 
     static_libs: [
         "androidx.appcompat_appcompat",
@@ -25,4 +26,11 @@ android_app {
         "SettingsLibPreference",
         "LineagePreferenceLib",
     ],
+}
+
+prebuilt_etc {
+    name: "nasgor-settings-sysconfig",
+    src: "nasgor-settings-sysconfig.xml",
+    sub_dir: "sysconfig",
+    system_ext_specific: true,
 }

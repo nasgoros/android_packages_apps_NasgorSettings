@@ -11,10 +11,7 @@
     <uses-permission android:name="lineageos.permission.MANAGE_REMOTE_PREFERENCES" />
     <uses-permission android:name="android.permission.ACCESS_FPS_COUNTER" />
     <uses-permission android:name="android.permission.REAL_GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:label="@string/app_name"
@@ -57,14 +54,19 @@
             android:exported="true"
             android:label="@string/performance_title" />
 
+        <!-- FPS overlay: plain service, no notification (power-save allowlisted) -->
         <service
-            android:name=".performance.PerformanceOverlayService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="User-enabled FPS, CPU, GPU and memory monitoring overlay" />
-        </service>
+            android:name=".performance.FpsOverlayService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".performance.FpsBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Moves the LineageParts entries out of the stock Settings categories -->
         <receiver
