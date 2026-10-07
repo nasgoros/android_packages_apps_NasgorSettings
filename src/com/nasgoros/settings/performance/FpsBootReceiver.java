@@ -9,6 +9,6 @@ import android.content.Intent;
 /** Restores the FPS overlay after boot or an app update when the user left it on. */
 public class FpsBootReceiver extends BroadcastReceiver {
     @Override public void onReceive(Context context, Intent intent) {
-        if (FpsSettings.isEnabled(context)) FpsSettings.apply(context);
+        if (FpsSettings.isOverlayNeeded(context)) FpsSettings.apply(context);
     }
 }

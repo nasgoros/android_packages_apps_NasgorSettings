@@ -26,7 +26,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import java.util.Locale;
 
 /**
  * Small draggable FPS counter drawn over apps.
@@ -46,6 +45,8 @@ public class FpsOverlayService extends Service {
     private TextView mOverlay;
     private boolean mSampling;
     private boolean mReceiverRegistered;
+    private boolean mShowFps;
+    private boolean mShowRefreshRate;
 
     private final BroadcastReceiver mScreenReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) { updateScreenState(); }
@@ -55,15 +56,25 @@ public class FpsOverlayService extends Service {
         @Override public void run() {
             if (mOverlay == null) return;
             if (!screenAvailable()) { updateScreenState(); return; }
-            float fps = mFps.sample();
-            // App frame rate ("fps") and the panel's current refresh rate in Hz ("fr").
-            int hz = Math.round(mDisplay.getMode().getRefreshRate());
-            mOverlay.setText(Float.isNaN(fps)
-                    ? String.format(Locale.getDefault(), "—fps %dfr", hz)
-                    : String.format(Locale.getDefault(), "%dfps %dfr", Math.round(fps), hz));
+            mOverlay.setText(overlayText());
             mMain.postDelayed(this, INTERVAL_MS);
         }
     };
+
+    /** e.g. "20fps", "60fr" or "20fps 60fr", depending on which counters are on. */
+    private String overlayText() {
+        StringBuilder text = new StringBuilder();
+        if (mShowFps) {
+            float fps = mFps.sample();
+            text.append(Float.isNaN(fps) ? "—" : String.valueOf(Math.round(fps))).append("fps");
+        }
+        if (mShowRefreshRate) {
+            // Current panel refresh rate in Hz (60/90/120), shown as "fr".
+            if (text.length() > 0) text.append(' ');
+            text.append(Math.round(mDisplay.getMode().getRefreshRate())).append("fr");
+        }
+        return text.toString();
+    }
 
     @Override public void onCreate() {
         super.onCreate();
@@ -84,15 +95,19 @@ public class FpsOverlayService extends Service {
     }
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
-        if (!FpsSettings.isEnabled(this)) {
+        if (!FpsSettings.isOverlayNeeded(this)) {
             stopSelf();
             return START_NOT_STICKY;
         }
+        mShowFps = FpsSettings.isEnabled(this);
+        mShowRefreshRate = FpsSettings.isRefreshRateEnabled(this);
+        // Stop FPS sampling (and its SurfaceFlinger callback) when only Hz is shown.
+        if (!mShowFps) mFps.close();
         try {
             if (mOverlay == null) createOverlay();
             updateScreenState();
         } catch (RuntimeException e) {
-            FpsSettings.setEnabled(this, false);
+            FpsSettings.disableAll(this);
             stopSelf();
             return START_NOT_STICKY;
         }
@@ -103,7 +118,7 @@ public class FpsOverlayService extends Service {
     @SuppressLint("ClickableViewAccessibility")
     private void createOverlay() {
         TextView overlay = new TextView(mWindowContext);
-        overlay.setText("—fps —fr");
+        overlay.setText(overlayText());
         overlay.setTextColor(Color.WHITE);
         overlay.setTextSize(12);
         overlay.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));

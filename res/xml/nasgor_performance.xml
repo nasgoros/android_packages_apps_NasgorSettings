@@ -7,4 +7,8 @@
         android:title="@string/fps_overlay_title"
         android:summary="@string/fps_overlay_summary"
         android:persistent="false" />
+    <SwitchPreferenceCompat android:key="refresh_rate_overlay"
+        android:title="@string/refresh_rate_overlay_title"
+        android:summary="@string/refresh_rate_overlay_summary"
+        android:persistent="false" />
 </PreferenceScreen>

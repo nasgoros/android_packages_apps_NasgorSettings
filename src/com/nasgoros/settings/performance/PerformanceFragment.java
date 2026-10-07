@@ -10,6 +10,7 @@ import com.nasgoros.settings.R;
 
 public class PerformanceFragment extends PreferenceFragmentCompat {
     private SwitchPreferenceCompat mFps;
+    private SwitchPreferenceCompat mRefreshRate;
 
     @Override public void onCreatePreferences(Bundle state, String rootKey) {
         setPreferencesFromResource(R.xml.nasgor_performance, rootKey);
@@ -20,10 +21,18 @@ public class PerformanceFragment extends PreferenceFragmentCompat {
             FpsSettings.apply(context);
             return true;
         });
+        mRefreshRate = findPreference("refresh_rate_overlay");
+        mRefreshRate.setOnPreferenceChangeListener((preference, value) -> {
+            Context context = requireContext();
+            FpsSettings.setRefreshRateEnabled(context, (Boolean) value);
+            FpsSettings.apply(context);
+            return true;
+        });
     }
 
     @Override public void onResume() {
         super.onResume();
         mFps.setChecked(FpsSettings.isEnabled(requireContext()));
+        mRefreshRate.setChecked(FpsSettings.isRefreshRateEnabled(requireContext()));
     }
 }

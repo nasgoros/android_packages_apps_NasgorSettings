@@ -14,5 +14,7 @@
     <string name="performance_title">Info FPS</string>
     <string name="performance_summary">Tampilkan frame rate aplikasi di layar</string>
     <string name="fps_overlay_title">Tampilkan info FPS</string>
-    <string name="fps_overlay_summary">Penghitung kecil di atas aplikasi: frame rate aplikasi (fps) dan refresh rate layar dalam Hz (fr), default di pojok kanan atas. Seret untuk memindahkannya. Disembunyikan saat terkunci atau layar mati.</string>
+    <string name="fps_overlay_summary">Penghitung FPS kecil di atas aplikasi, default di pojok kanan atas. Seret untuk memindahkannya. Disembunyikan saat terkunci atau layar mati.</string>
+    <string name="refresh_rate_overlay_title">Tampilkan refresh rate</string>
+    <string name="refresh_rate_overlay_summary">Menampilkan refresh rate layar saat ini (Hz) di penghitung mengambang yang sama, misalnya 60fr.</string>
 </resources>
