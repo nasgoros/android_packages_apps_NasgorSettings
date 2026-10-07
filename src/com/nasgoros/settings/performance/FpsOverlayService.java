@@ -121,6 +121,10 @@ public class FpsOverlayService extends Service {
         mParams.x = x == FpsSettings.UNSET ? dp(8) : x;
         mParams.y = y == FpsSettings.UNSET ? dp(48) : y;
         mParams.setTitle("NasgorOS FPS");
+        // Settings, Files, the package installer and other system UIs set
+        // HIDE_NON_SYSTEM_OVERLAY_WINDOWS, which hides normal app overlays. A system
+        // application overlay (platform-signed, SYSTEM_APPLICATION_OVERLAY) stays visible.
+        mParams.setSystemApplicationOverlay(true);
         overlay.setOnTouchListener(new DragListener());
         mWindows.addView(overlay, mParams);
         mOverlay = overlay;
