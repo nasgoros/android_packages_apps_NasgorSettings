@@ -39,6 +39,7 @@ public class FpsOverlayService extends Service {
     private static final long INTERVAL_MS = 1000;
     private final Handler mMain = new Handler(Looper.getMainLooper());
     private TaskFpsMonitor mFps;
+    private Display mDisplay;
     private Context mWindowContext;
     private WindowManager mWindows;
     private WindowManager.LayoutParams mParams;
@@ -55,8 +56,11 @@ public class FpsOverlayService extends Service {
             if (mOverlay == null) return;
             if (!screenAvailable()) { updateScreenState(); return; }
             float fps = mFps.sample();
-            mOverlay.setText(Float.isNaN(fps) ? "— FPS"
-                    : String.format(Locale.getDefault(), "%d FPS", Math.round(fps)));
+            // App frame rate ("fps") and the panel's current refresh rate in Hz ("fr").
+            int hz = Math.round(mDisplay.getMode().getRefreshRate());
+            mOverlay.setText(Float.isNaN(fps)
+                    ? String.format(Locale.getDefault(), "—fps %dfr", hz)
+                    : String.format(Locale.getDefault(), "%dfps %dfr", Math.round(fps), hz));
             mMain.postDelayed(this, INTERVAL_MS);
         }
     };
@@ -66,6 +70,7 @@ public class FpsOverlayService extends Service {
         // A window context gives the overlay correct metrics and configuration.
         Display display = getSystemService(DisplayManager.class)
                 .getDisplay(Display.DEFAULT_DISPLAY);
+        mDisplay = display;
         mWindowContext = createWindowContext(display,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, null);
         mWindows = mWindowContext.getSystemService(WindowManager.class);
@@ -98,7 +103,7 @@ public class FpsOverlayService extends Service {
     @SuppressLint("ClickableViewAccessibility")
     private void createOverlay() {
         TextView overlay = new TextView(mWindowContext);
-        overlay.setText("— FPS");
+        overlay.setText("—fps —fr");
         overlay.setTextColor(Color.WHITE);
         overlay.setTextSize(12);
         overlay.setTypeface(Typeface.create(Typeface.MONOSPACE, Typeface.BOLD));

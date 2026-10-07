@@ -15,5 +15,5 @@
     <string name="performance_title">FPS info</string>
     <string name="performance_summary">Show the frame rate of the app on screen</string>
     <string name="fps_overlay_title">Show FPS info</string>
-    <string name="fps_overlay_summary">Small FPS counter over apps, top right by default. Drag it to move it. Hidden while locked or screen off.</string>
+    <string name="fps_overlay_summary">Small counter over apps showing app frame rate (fps) and the screen refresh rate in Hz (fr), top right by default. Drag it to move it. Hidden while locked or screen off.</string>
 </resources>
